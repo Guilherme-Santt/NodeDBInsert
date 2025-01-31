@@ -1,3 +1,6 @@
+
+
+
 function checkNumber(n){
     const result = Number(n);
     if(Number.isNaN(result)){
@@ -11,8 +14,9 @@ const botao = document.querySelector("#validar");
 
 botao.addEventListener("click", function () {
     const cpf = document.getElementById("cpf").value; // Captura o valor dentro do evento
-    
+
     if (!cpf) {
+        throw new Error("Campo em branco");
         console.log("Campo em branco");
         console.log("Digite o valor correto");
         Swal.fire({
@@ -25,13 +29,24 @@ botao.addEventListener("click", function () {
     }
     
     if (checkNumber(cpf)) { // Supondo que checkNumber retorne um booleano
-        console.log("Tudo certo");
-        Swal.fire({
-            icon: 'success',
-            title: `Valor "${cpf}" está correto`,
-            // text: '',
-            confirmButtonText: 'fechar'
-        });
+        if(cpf.length != 11){
+            console.log("Tudo certo");
+            Swal.fire({
+                icon: 'error',
+                title: `Deve conter 11 dígitos`,
+                text: 'teste',
+                confirmButtonText: 'fechar'
+            });
+        } else{
+            console.log("Tudo certo");
+            Swal.fire({
+                icon: 'success',
+                title: `Valor "${cpf}" está correto`,
+                // text: '',
+                confirmButtonText: 'fechar'
+            });
+        }
+
     } else {
         console.log("Digite o valor correto");
         Swal.fire({
@@ -40,5 +55,6 @@ botao.addEventListener("click", function () {
             // text: 'Verifique os campos preenchidos',
             confirmButtonText: 'Fechar'
         });
+    
     }
 });
